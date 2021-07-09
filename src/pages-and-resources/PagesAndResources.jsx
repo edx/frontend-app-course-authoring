@@ -1,19 +1,18 @@
-import React, { useEffect, Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { Switch, useRouteMatch } from 'react-router';
+
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { PageRoute } from '@edx/frontend-platform/react';
 
-import { Switch, useRouteMatch } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-
-import messages from './messages';
-import DiscussionsSettings from './discussions';
-
+import { useModels } from '../generic/model-store';
+import { fetchCourseApps } from './data/thunks';
 import PageGrid from './pages/PageGrid';
 import ResourceList from './resources/ResourcesList';
-
-import { fetchCourseApps } from './data/thunks';
-import { useModels } from '../generic/model-store';
+import DiscussionsSettings from './discussions';
+import messages from './messages';
 import PagesAndResourcesProvider from './PagesAndResourcesProvider';
 
 function PagesAndResources({ courseId, intl }) {

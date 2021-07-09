@@ -1,2 +1,2 @@
-export { default } from './DiscussionsSettings';
 export { reducer } from './data/slice';
+export { default } from './DiscussionsSettings';

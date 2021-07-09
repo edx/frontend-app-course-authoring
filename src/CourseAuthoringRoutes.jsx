@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Switch, useRouteMatch } from 'react-router';
+
 import { PageRoute } from '@edx/frontend-platform/react';
 
+import ProctoredExamSettings from './proctored-exam-settings/ProctoredExamSettings';
 import CourseAuthoringPage from './CourseAuthoringPage';
 import { PagesAndResources } from './pages-and-resources';
-import ProctoredExamSettings from './proctored-exam-settings/ProctoredExamSettings';
 
 /**
  * As of this writing, these routes are mounted at a path prefixed with the following:

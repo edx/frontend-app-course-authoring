@@ -1,6 +1,8 @@
 import React from 'react';
+
+import { queryByTestId, render } from '@testing-library/react';
+
 import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { render, queryByTestId } from '@testing-library/react';
 
 import FeaturesTable from './FeaturesTable';
 

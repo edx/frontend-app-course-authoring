@@ -1,9 +1,10 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import { getConfig } from '@edx/frontend-platform';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import PropTypes from 'prop-types';
-import React from 'react';
-import AppSettingsModal from '../app-settings-modal/AppSettingsModal';
 
+import AppSettingsModal from '../app-settings-modal/AppSettingsModal';
 import messages from './messages';
 
 const CALCULATOR_HELP_URL = getConfig().CALCULATOR_HELP_URL

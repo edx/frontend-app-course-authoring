@@ -1,23 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import EmailValidator from 'email-validator';
 import moment from 'moment';
+
+import { getConfig } from '@edx/frontend-platform';
+import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+} from '@edx/frontend-platform/i18n';
 import {
   Alert, Button, Form, Spinner,
 } from '@edx/paragon';
-import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
-import {
-  injectIntl,
-  intlShape,
-  FormattedMessage,
-} from '@edx/frontend-platform/i18n';
 
-import { getConfig } from '@edx/frontend-platform';
-import messages from './ProctoredExamSettings.messages';
 import StudioApiService from '../data/services/StudioApiService';
-import Loading from '../generic/Loading';
 import ConnectionErrorAlert from '../generic/ConnectionErrorAlert';
+import Loading from '../generic/Loading';
 import PermissionDeniedAlert from '../generic/PermissionDeniedAlert';
+import messages from './ProctoredExamSettings.messages';
 
 function ProctoredExamSettings({ courseId, intl }) {
   const [loading, setLoading] = useState(true);

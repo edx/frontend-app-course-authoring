@@ -1,15 +1,16 @@
 import { history } from '@edx/frontend-platform';
+
 import { addModel, addModels } from '../../../generic/model-store';
 import { getApps, postAppConfig } from './api';
 import {
+  DENIED,
   FAILED,
   loadApps,
   LOADING,
   SAVED,
   SAVING,
-  updateStatus,
   updateSaveStatus,
-  DENIED,
+  updateStatus,
 } from './slice';
 
 export function fetchApps(courseId) {

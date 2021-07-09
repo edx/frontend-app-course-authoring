@@ -2,25 +2,26 @@ import React, {
   useCallback, useContext, useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
+
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Container } from '@edx/paragon';
 
+import Loading from '../../../generic/Loading';
 import { useModel, useModels } from '../../../generic/model-store';
+import SaveFormConnectionErrorAlert from '../../../generic/SaveFormConnectionErrorAlert';
 import { PagesAndResourcesContext } from '../../PagesAndResourcesProvider';
 import {
   FAILED, LOADED, LOADING, selectApp,
 } from '../data/slice';
 import { saveAppConfig } from '../data/thunks';
-
-import messages from './messages';
-import AppConfigFormProvider, { AppConfigFormContext } from './AppConfigFormProvider';
-import AppConfigFormSaveButton from './AppConfigFormSaveButton';
 import LegacyConfigForm from './apps/legacy';
 import LtiConfigForm from './apps/lti';
-import Loading from '../../../generic/Loading';
-import SaveFormConnectionErrorAlert from '../../../generic/SaveFormConnectionErrorAlert';
+import AppConfigFormProvider, { AppConfigFormContext } from './AppConfigFormProvider';
+import AppConfigFormSaveButton from './AppConfigFormSaveButton';
+import messages from './messages';
 
 function AppConfigForm({
   courseId, intl,

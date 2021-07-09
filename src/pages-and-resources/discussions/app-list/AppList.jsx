@@ -1,18 +1,21 @@
 import React, { useCallback, useEffect } from 'react';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { CardGrid, Container, breakpoints } from '@edx/paragon';
+
 import { useDispatch, useSelector } from 'react-redux';
 import Responsive from 'react-responsive';
+
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { breakpoints, CardGrid, Container } from '@edx/paragon';
+
+import Loading from '../../../generic/Loading';
 import { useModels } from '../../../generic/model-store';
 import {
-  selectApp, LOADED, LOADING,
-  updateValidationStatus,
+  LOADED, LOADING,
+  selectApp, updateValidationStatus,
 } from '../data/slice';
 import AppCard from './AppCard';
-import messages from './messages';
-import FeaturesTable from './FeaturesTable';
 import AppListNextButton from './AppListNextButton';
-import Loading from '../../../generic/Loading';
+import FeaturesTable from './FeaturesTable';
+import messages from './messages';
 
 function AppList({ intl }) {
   const dispatch = useDispatch();

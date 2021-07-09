@@ -1,18 +1,17 @@
 // This file was copied from edx/frontend-component-header-edx.
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-// Local Components
-import { Menu, MenuTrigger, MenuContent } from './Menu';
 import Avatar from './Avatar';
-import { LinkedLogo, Logo } from './Logo';
-
 // i18n
 import messages from './Header.messages';
-
 // Assets
 import { CaretIcon } from './Icons';
+import { LinkedLogo, Logo } from './Logo';
+// Local Components
+import { Menu, MenuContent, MenuTrigger } from './Menu';
 
 class DesktopHeader extends React.Component {
   constructor(props) { // eslint-disable-line no-useless-constructor

@@ -1,10 +1,10 @@
 import { addModel } from '../generic/model-store';
 import { getCourseDetail } from './api';
 import {
-  updateStatus,
-  LOADING,
-  LOADED,
   FAILED,
+  LOADED,
+  LOADING,
+  updateStatus,
 } from './slice';
 
 /* eslint-disable import/prefer-default-export */

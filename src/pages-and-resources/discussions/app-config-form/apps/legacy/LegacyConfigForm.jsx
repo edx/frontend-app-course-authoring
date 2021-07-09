@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Card, Form } from '@edx/paragon';
+
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { Card, Form } from '@edx/paragon';
 
-import DivisionByGroupFields from '../shared/DivisionByGroupFields';
 import AnonymousPostingFields from '../shared/AnonymousPostingFields';
-import DiscussionTopics from '../shared/discussion-topics/DiscussionTopics';
-import BlackoutDatesField, { blackoutDatesRegex } from '../shared/BlackoutDatesField';
-import LegacyConfigFormProvider from './LegacyConfigFormProvider';
-
-import messages from '../shared/messages';
 import AppConfigFormDivider from '../shared/AppConfigFormDivider';
+import BlackoutDatesField, { blackoutDatesRegex } from '../shared/BlackoutDatesField';
+import DiscussionTopics from '../shared/discussion-topics/DiscussionTopics';
+import DivisionByGroupFields from '../shared/DivisionByGroupFields';
+import messages from '../shared/messages';
+import LegacyConfigFormProvider from './LegacyConfigFormProvider';
 
 // eslint-disable-next-line func-names
 Yup.addMethod(Yup.object, 'uniqueProperty', function (propertyName, message) {

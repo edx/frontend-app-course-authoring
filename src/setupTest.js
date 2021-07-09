@@ -1,8 +1,10 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+
+import ReactDOM from 'react-dom';
+
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
-import ReactDOM from 'react-dom';
 
 // Modal creates a portal.  Overriding ReactDOM.createPortal allows portals to be tested in jest.
 ReactDOM.createPortal = node => node;

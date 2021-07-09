@@ -1,6 +1,8 @@
 import React from 'react';
+
+import { queryByLabelText, render } from '@testing-library/react';
+
 import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { render, queryByLabelText } from '@testing-library/react';
 
 import AppCard from './AppCard';
 import messages from './messages';

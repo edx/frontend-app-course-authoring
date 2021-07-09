@@ -1,7 +1,8 @@
 import React from 'react';
-import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-platform/i18n';
-import { Alert } from '@edx/paragon';
+
 import { getConfig } from '@edx/frontend-platform';
+import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { Alert } from '@edx/paragon';
 
 import messages from '../messages';
 

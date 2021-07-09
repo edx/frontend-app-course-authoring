@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import classNames from 'classnames';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import Responsive from 'react-responsive';
+
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
-  Card, CheckboxControl, breakpoints,
+  breakpoints,
+  Card, CheckboxControl,
 } from '@edx/paragon';
-import messages from './messages';
+
 import FeaturesList from './FeaturesList';
+import messages from './messages';
 
 function AppCard({
   app, onClick, intl, selected, features,

@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Remove, Check } from '@edx/paragon/icons';
-import { DataTable } from '@edx/paragon';
+
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { DataTable } from '@edx/paragon';
+import { Check, Remove } from '@edx/paragon/icons';
+
 import messages from './messages';
 
 function FeaturesTable({ apps, features, intl }) {

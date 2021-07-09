@@ -1,15 +1,17 @@
 import React, { createRef } from 'react';
+
 import { act, render } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { initializeMockApp } from '@edx/frontend-platform';
-import { AppProvider } from '@edx/frontend-platform/react';
-import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import MockAdapter from 'axios-mock-adapter';
 
-import { getAppsUrl } from '../../../data/api';
-import { fetchApps } from '../../../data/thunks';
+import { initializeMockApp } from '@edx/frontend-platform';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { AppProvider } from '@edx/frontend-platform/react';
+
 import initializeStore from '../../../../../store';
 import executeThunk from '../../../../../utils';
+import { getAppsUrl } from '../../../data/api';
+import { fetchApps } from '../../../data/thunks';
 import {
   legacyApiResponse,
 } from '../../../factories/mockApiResponses';

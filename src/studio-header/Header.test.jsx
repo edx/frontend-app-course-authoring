@@ -1,13 +1,15 @@
 // This file was copied from edx/frontend-component-header-edx.
 import React from 'react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { AppContext } from '@edx/frontend-platform/react';
-import { Context as ResponsiveContext } from 'react-responsive';
+
 import {
   cleanup,
   render,
   screen,
 } from '@testing-library/react';
+import { Context as ResponsiveContext } from 'react-responsive';
+
+import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { AppContext } from '@edx/frontend-platform/react';
 
 import Header from './Header';
 

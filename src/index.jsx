@@ -1,21 +1,23 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-import {
-  APP_INIT_ERROR, APP_READY, subscribe, initialize, mergeConfig,
-} from '@edx/frontend-platform';
-import { AppProvider, ErrorPage } from '@edx/frontend-platform/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import { Route, Switch } from 'react-router-dom';
 
 import { messages as footerMessages } from '@edx/frontend-component-footer';
+import {
+  APP_INIT_ERROR, APP_READY, initialize, mergeConfig,
+  subscribe,
+} from '@edx/frontend-platform';
+import { AppProvider, ErrorPage } from '@edx/frontend-platform/react';
 
-import appMessages from './i18n';
-
-import initializeStore from './store';
-import './index.scss';
 import CourseAuthoringRoutes from './CourseAuthoringRoutes';
+import appMessages from './i18n';
+import initializeStore from './store';
+
+import './index.scss';
 
 subscribe(APP_READY, () => {
   ReactDOM.render(

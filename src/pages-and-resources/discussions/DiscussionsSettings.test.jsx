@@ -3,30 +3,31 @@ import React from 'react';
 import {
   act,
   queryByLabelText,
+  queryByRole,
   queryByTestId,
   queryByText,
   render,
   screen,
-  waitForElementToBeRemoved,
-  queryByRole,
   waitFor,
+  waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AppProvider, PageRoute } from '@edx/frontend-platform/react';
+import MockAdapter from 'axios-mock-adapter';
 import { Switch } from 'react-router';
 
 import {
   getConfig, history, initializeMockApp, setConfig,
 } from '@edx/frontend-platform';
-import MockAdapter from 'axios-mock-adapter';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
-import DiscussionsSettings from './DiscussionsSettings';
-import PagesAndResourcesProvider from '../PagesAndResourcesProvider';
+import { AppProvider, PageRoute } from '@edx/frontend-platform/react';
+
 import initializeStore from '../../store';
-import { getAppsUrl } from './data/api';
-import { piazzaApiResponse, legacyApiResponse } from './factories/mockApiResponses';
+import PagesAndResourcesProvider from '../PagesAndResourcesProvider';
 import appMessages from './app-config-form/messages';
 import appListMessages from './app-list/messages';
+import { getAppsUrl } from './data/api';
+import { legacyApiResponse, piazzaApiResponse } from './factories/mockApiResponses';
+import DiscussionsSettings from './DiscussionsSettings';
 
 const courseId = 'course-v1:edX+TestX+Test_Course';
 let axiosMock;

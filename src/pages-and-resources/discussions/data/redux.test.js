@@ -1,16 +1,18 @@
-import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import MockAdapter from 'axios-mock-adapter';
-import { initializeMockApp } from '@edx/frontend-platform/testing';
+
 import { history } from '@edx/frontend-platform';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import { initializeMockApp } from '@edx/frontend-platform/testing';
+
+import { LOADED } from '../../../data/slice';
 import initializeStore from '../../../store';
+import executeThunk from '../../../utils';
+import { legacyApiResponse, piazzaApiResponse } from '../factories/mockApiResponses';
 import { getAppsUrl } from './api';
 import {
-  FAILED, SAVED, DENIED, selectApp, updateValidationStatus,
+  DENIED, FAILED, SAVED, selectApp, updateValidationStatus,
 } from './slice';
 import { fetchApps, saveAppConfig } from './thunks';
-import { LOADED } from '../../../data/slice';
-import { legacyApiResponse, piazzaApiResponse } from '../factories/mockApiResponses';
-import executeThunk from '../../../utils';
 
 const courseId = 'course-v1:edX+TestX+Test_Course';
 const pagesAndResourcesPath = `/course/${courseId}/pages-and-resources`;

@@ -1,11 +1,13 @@
 import React, { useCallback, useContext } from 'react';
+
 import { useSelector } from 'react-redux';
+
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { StatefulButton } from '@edx/paragon';
 
-import messages from './messages';
 import { SAVING } from '../data/slice';
 import { AppConfigFormContext } from './AppConfigFormProvider';
+import messages from './messages';
 
 function AppConfigFormSaveButton({ intl }) {
   const saveStatus = useSelector(state => state.discussions.saveStatus);

@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+
+import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
+import * as Yup from 'yup';
+
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
   Card, Form,
 } from '@edx/paragon';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-
-import AppExternalLinks from '../shared/AppExternalLinks';
 
 import {
   updateValidationStatus,
 } from '../../../data/slice';
+import AppExternalLinks from '../shared/AppExternalLinks';
 import messages from './messages';
 
 function LtiConfigForm({

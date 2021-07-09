@@ -1,6 +1,7 @@
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import classNames from 'classnames';
 
 export default function AppConfigFormDivider({ thick, marginAdj }) {
   return (

@@ -1,4 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+
+import { useFormikContext } from 'formik';
+
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
   Button,
@@ -10,11 +14,10 @@ import {
   TransitionReplace,
 } from '@edx/paragon';
 import { Delete, ExpandLess, ExpandMore } from '@edx/paragon/icons';
-import { useFormikContext } from 'formik';
-import PropTypes from 'prop-types';
-import messages from '../messages';
-import { LegacyConfigFormContext } from '../../legacy/LegacyConfigFormProvider';
+
 import uniqueItems from '../../../utils';
+import { LegacyConfigFormContext } from '../../legacy/LegacyConfigFormProvider';
+import messages from '../messages';
 
 const TopicItem = ({
   intl, index, name, onDelete, id, hasError,

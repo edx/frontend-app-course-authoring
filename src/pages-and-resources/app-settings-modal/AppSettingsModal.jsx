@@ -1,12 +1,15 @@
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+
+import { Formik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import * as Yup from 'yup';
+
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
   Button, Form, Hyperlink, ModalLayer, Spinner, TransitionReplace,
 } from '@edx/paragon';
-import { Formik } from 'formik';
-import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import * as Yup from 'yup';
+
 import { RequestStatus } from '../../data/constants';
 import FormSwitchGroup from '../../generic/FormSwitchGroup';
 import { useModel } from '../../generic/model-store';

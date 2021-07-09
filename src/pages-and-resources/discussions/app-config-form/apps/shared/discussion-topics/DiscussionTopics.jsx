@@ -1,15 +1,17 @@
-import React, { useEffect, useContext } from 'react';
-import { useDispatch } from 'react-redux';
-import { Add } from '@edx/paragon/icons';
-import { Button } from '@edx/paragon';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import React, { useContext, useEffect } from 'react';
+
 import { FieldArray, useFormikContext } from 'formik';
+import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 
-import messages from '../messages';
-import TopicItem from './TopicItem';
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { Button } from '@edx/paragon';
+import { Add } from '@edx/paragon/icons';
+
 import { updateValidationStatus } from '../../../../data/slice';
 import { LegacyConfigFormContext } from '../../legacy/LegacyConfigFormProvider';
+import messages from '../messages';
+import TopicItem from './TopicItem';
 
 const DiscussionTopics = ({ intl }) => {
   const {

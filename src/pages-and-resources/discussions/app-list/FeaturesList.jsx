@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Remove, Check } from '@edx/paragon/icons';
-import { Collapsible } from '@edx/paragon';
+
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { Collapsible } from '@edx/paragon';
+import { Check, Remove } from '@edx/paragon/icons';
+
 import messages from './messages';
 
 const SupportedFeature = (

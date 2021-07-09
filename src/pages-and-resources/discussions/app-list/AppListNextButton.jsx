@@ -1,11 +1,12 @@
 import React, { useCallback, useContext } from 'react';
+
+import { useSelector } from 'react-redux';
+
 import { history } from '@edx/frontend-platform';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Button } from '@edx/paragon';
-import { useSelector } from 'react-redux';
 
 import { DiscussionsContext } from '../DiscussionsProvider';
-
 import messages from './messages';
 
 function AppListNextButton({ intl }) {

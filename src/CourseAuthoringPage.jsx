@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Footer from '@edx/frontend-component-footer';
+
 import { useDispatch } from 'react-redux';
 
-import Header from './studio-header/Header';
+import Footer from '@edx/frontend-component-footer';
+
 import { fetchCourseDetail } from './data/thunks';
 import { useModel } from './generic/model-store';
+import Header from './studio-header/Header';
 
 export default function CourseAuthoringPage({ courseId, children }) {
   const dispatch = useDispatch();

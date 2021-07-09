@@ -1,20 +1,21 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable jsx-a11y/anchor-has-content */
-import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+
 import Responsive from 'react-responsive';
-import { AppContext } from '@edx/frontend-platform/react';
+
 import { ensureConfig } from '@edx/frontend-platform';
 import {
   injectIntl,
   intlShape,
 } from '@edx/frontend-platform/i18n';
-
-import DesktopHeader from './DesktopHeader';
-import MobileHeader from './MobileHeader';
-import messages from './Header.messages';
+import { AppContext } from '@edx/frontend-platform/react';
 
 import StudioLogoSVG from './assets/studio-logo.svg';
+import DesktopHeader from './DesktopHeader';
+import messages from './Header.messages';
+import MobileHeader from './MobileHeader';
 
 ensureConfig([
   'STUDIO_BASE_URL',

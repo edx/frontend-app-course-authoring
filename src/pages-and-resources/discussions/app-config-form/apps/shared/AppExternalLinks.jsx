@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
   Hyperlink, MailtoLink,
 } from '@edx/paragon';
 
-import AppConfigFormDivider from './AppConfigFormDivider';
-
 import messages from '../lti/messages';
+import AppConfigFormDivider from './AppConfigFormDivider';
 
 function AppExternalLinks({
   externalLinks,

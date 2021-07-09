@@ -1,14 +1,18 @@
 import React from 'react';
+
 import {
-  render, screen, cleanup, waitFor, waitForElementToBeRemoved, fireEvent, act,
+  act,
+  cleanup, fireEvent, render, screen, waitFor, waitForElementToBeRemoved,
 } from '@testing-library/react';
-import { IntlProvider, injectIntl } from '@edx/frontend-platform/i18n';
 // import * as auth from '@edx/frontend-platform/auth';
 import MockAdapter from 'axios-mock-adapter';
+
 import { initializeMockApp } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
-import ProctoredExamSettings from './ProctoredExamSettings';
+import { injectIntl, IntlProvider } from '@edx/frontend-platform/i18n';
+
 import StudioApiService from '../data/services/StudioApiService';
+import ProctoredExamSettings from './ProctoredExamSettings';
 
 const defaultProps = {
   courseId: 'course-v1%3AedX%2BDemoX%2BDemo_Course',

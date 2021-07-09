@@ -1,6 +1,7 @@
-import { Form, SwitchControl } from '@edx/paragon';
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import { Form, SwitchControl } from '@edx/paragon';
 
 export default function FormSwitchGroup({
   id,

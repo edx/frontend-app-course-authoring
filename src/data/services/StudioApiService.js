@@ -1,5 +1,5 @@
+import { ensureConfig, getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
-import { getConfig, ensureConfig } from '@edx/frontend-platform';
 
 ensureConfig([
   'STUDIO_BASE_URL',

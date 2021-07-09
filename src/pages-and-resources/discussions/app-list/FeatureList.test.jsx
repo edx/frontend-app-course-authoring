@@ -1,9 +1,13 @@
 import React from 'react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+
 import {
-  render, queryAllByText, queryByText, getByRole,
+  getByRole,
+  queryAllByText, queryByText, render,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
+import { IntlProvider } from '@edx/frontend-platform/i18n';
+
 import FeaturesList from './FeaturesList';
 import messages from './messages';
 

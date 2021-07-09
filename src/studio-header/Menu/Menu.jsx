@@ -1,7 +1,8 @@
 // This file was copied from edx/frontend-component-header-edx.
 import React from 'react';
-import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
+
+import { CSSTransition } from 'react-transition-group';
 
 function MenuTrigger({ tag, className, ...attributes }) {
   return React.createElement(tag, {
@@ -276,4 +277,4 @@ Menu.defaultProps = {
   transitionClassName: 'menu-content',
 };
 
-export { Menu, MenuTrigger, MenuContent };
+export { Menu, MenuContent, MenuTrigger };

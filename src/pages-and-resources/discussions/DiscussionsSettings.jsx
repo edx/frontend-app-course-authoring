@@ -2,27 +2,27 @@ import React, {
   useCallback, useContext, useEffect, useState,
 } from 'react';
 import PropTypes from 'prop-types';
+
+import { useDispatch, useSelector } from 'react-redux';
 import {
   useRouteMatch,
 } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-import { history } from '@edx/frontend-platform';
 
+import { history } from '@edx/frontend-platform';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
   Button, FullscreenModal, Stepper,
 } from '@edx/paragon';
 
-import { PagesAndResourcesContext } from '../PagesAndResourcesProvider';
-
-import messages from './messages';
-import DiscussionsProvider from './DiscussionsProvider';
-import { fetchApps } from './data/thunks';
-import AppList from './app-list';
-import AppConfigForm from './app-config-form';
-import { DENIED, FAILED } from './data/slice';
 import ConnectionErrorAlert from '../../generic/ConnectionErrorAlert';
 import PermissionDeniedAlert from '../../generic/PermissionDeniedAlert';
+import { PagesAndResourcesContext } from '../PagesAndResourcesProvider';
+import { DENIED, FAILED } from './data/slice';
+import { fetchApps } from './data/thunks';
+import AppConfigForm from './app-config-form';
+import AppList from './app-list';
+import DiscussionsProvider from './DiscussionsProvider';
+import messages from './messages';
 
 const SELECTION_STEP = 'selection';
 const SETTINGS_STEP = 'settings';

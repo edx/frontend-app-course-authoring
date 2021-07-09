@@ -1,26 +1,28 @@
 import React from 'react';
+
 import {
   act,
+  fireEvent,
   queryByLabelText,
   queryByText,
   render,
-  fireEvent,
 } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { initializeMockApp } from '@edx/frontend-platform';
-import { AppProvider } from '@edx/frontend-platform/react';
-import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import userEvent from '@testing-library/user-event';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
-import userEvent from '@testing-library/user-event';
 
-import DiscussionTopics from './DiscussionTopics';
+import { initializeMockApp } from '@edx/frontend-platform';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { AppProvider } from '@edx/frontend-platform/react';
+
 import initializeStore from '../../../../../../store';
+import executeThunk from '../../../../../../utils';
 import { getAppsUrl } from '../../../../data/api';
 import { fetchApps } from '../../../../data/thunks';
-import executeThunk from '../../../../../../utils';
 import { legacyApiResponse } from '../../../../factories/mockApiResponses';
 import LegacyConfigFormProvider from '../../legacy/LegacyConfigFormProvider';
+import DiscussionTopics from './DiscussionTopics';
 
 const appConfig = {
   id: 'legacy',

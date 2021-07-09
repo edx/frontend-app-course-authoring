@@ -1,7 +1,9 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { injectIntl } from '@edx/frontend-platform/i18n';
 import { CardGrid } from '@edx/paragon';
+
 import PageCard, { CoursePageShape } from './PageCard';
 
 function PageGrid({ pages }) {

@@ -1,11 +1,14 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+
+import { FieldArray, useFormikContext } from 'formik';
+
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Form, TransitionReplace } from '@edx/paragon';
-import { FieldArray, useFormikContext } from 'formik';
+
 import FormSwitchGroup from '../../../../../generic/FormSwitchGroup';
-import messages from './messages';
-import AppConfigFormDivider from './AppConfigFormDivider';
 import { LegacyConfigFormContext } from '../legacy/LegacyConfigFormProvider';
+import AppConfigFormDivider from './AppConfigFormDivider';
+import messages from './messages';
 
 const DivisionByGroupFields = ({ intl }) => {
   const { validDiscussionTopics } = useContext(LegacyConfigFormContext);

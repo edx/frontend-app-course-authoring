@@ -1,9 +1,9 @@
 import { RequestStatus } from '../../data/constants';
+import { addModels, updateModel } from '../../generic/model-store';
 import {
   getCourseApps,
   updateCourseApp,
 } from './api';
-import { addModels, updateModel } from '../../generic/model-store';
 import {
   fetchCourseAppsSuccess,
   updateLoadingStatus,

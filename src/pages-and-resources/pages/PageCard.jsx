@@ -1,11 +1,13 @@
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+
 import { history } from '@edx/frontend-platform';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
   Button, Card, Icon, IconButton,
 } from '@edx/paragon';
 import { Settings } from '@edx/paragon/icons';
-import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+
 import StatusBadge from '../../generic/status-badge/StatusBadge';
 import messages from '../messages';
 import { PagesAndResourcesContext } from '../PagesAndResourcesProvider';

@@ -1,16 +1,18 @@
 import React from 'react';
 
+import {
+  getByLabelText, getByRole, queryAllByRole, queryAllByText,
+  queryByLabelText, queryByRole, queryByText, render,
+} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import MockAdapter from 'axios-mock-adapter';
+import { Context as ResponsiveContext } from 'react-responsive';
+
 import { initializeMockApp } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { AppProvider } from '@edx/frontend-platform/react';
 import { breakpoints } from '@edx/paragon';
-import {
-  queryByText, render, queryAllByRole, queryByRole, getByRole, queryByLabelText, getByLabelText, queryAllByText,
-} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import MockAdapter from 'axios-mock-adapter';
-import { Context as ResponsiveContext } from 'react-responsive';
 
 import initializeStore from '../../../store';
 import executeThunk from '../../../utils';
