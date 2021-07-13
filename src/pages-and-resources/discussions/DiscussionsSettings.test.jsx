@@ -27,6 +27,7 @@ import { getAppsUrl } from './data/api';
 import { piazzaApiResponse, legacyApiResponse } from './factories/mockApiResponses';
 import appMessages from './app-config-form/messages';
 import appListMessages from './app-list/messages';
+import { updateValidationStatus } from './data/slice';
 
 const courseId = 'course-v1:edX+TestX+Test_Course';
 let axiosMock;
@@ -74,7 +75,6 @@ describe('DiscussionsSettings', () => {
   describe('with successful network connections', () => {
     beforeEach(() => {
       axiosMock.onGet(getAppsUrl(courseId)).reply(200, piazzaApiResponse);
-
       renderComponent();
     });
 
@@ -189,6 +189,29 @@ describe('DiscussionsSettings', () => {
 
       expect(window.location.pathname).toEqual(`/course/${courseId}/pages-and-resources`);
     });
+  });
+
+  describe('Check Stepper error message', () => {
+    beforeEach(async () => {
+      axiosMock.onGet(getAppsUrl(courseId)).reply(200, legacyApiResponse);
+      renderComponent();
+      history.push(`/course/${courseId}/pages-and-resources/discussion`);
+      await waitForElementToBeRemoved(screen.getByRole('status'));
+      userEvent.click(queryByLabelText(container, 'Select edX'));
+      userEvent.click(queryByText(container, appListMessages.nextButton.defaultMessage));
+    });
+    test('incomplete setting error message appears/disappears on stepper',
+      async () => {
+        await store.dispatch(updateValidationStatus({ hasError: true }));
+        const stepper = container.getElementsByClassName('pgn__stepper-header-step-active');
+        await waitFor(() => {
+          expect(queryByText(stepper[0], 'Incomplete')).toBeInTheDocument();
+        });
+        await store.dispatch(updateValidationStatus({ hasError: false }));
+        await waitFor(() => {
+          expect(queryByText(stepper[0], 'Incomplete')).not.toBeInTheDocument();
+        });
+      });
   });
 
   describe('with network error fetchApps API requests', () => {
