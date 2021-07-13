@@ -135,7 +135,7 @@ const TopicItem = ({
           onToggle={handleToggle}
           defaultOpen={!name || hasError}
           open={collapseIsOpen}
-          id={id}
+          data-testid={id}
         >
           <Collapsible.Trigger
             className="collapsible-trigger d-flex border-0"

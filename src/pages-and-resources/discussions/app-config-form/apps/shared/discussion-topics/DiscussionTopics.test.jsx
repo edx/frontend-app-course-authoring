@@ -1,10 +1,9 @@
 import React from 'react';
 import {
-  act,
-  queryByLabelText,
   queryByText,
   render,
   fireEvent,
+  queryAllByTestId,
 } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { initializeMockApp } from '@edx/frontend-platform';
@@ -12,7 +11,6 @@ import { AppProvider } from '@edx/frontend-platform/react';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
-import userEvent from '@testing-library/user-event';
 
 import DiscussionTopics from './DiscussionTopics';
 import initializeStore from '../../../../../../store';
@@ -21,6 +19,7 @@ import { fetchApps } from '../../../../data/thunks';
 import executeThunk from '../../../../../../utils';
 import { legacyApiResponse } from '../../../../factories/mockApiResponses';
 import LegacyConfigFormProvider from '../../legacy/LegacyConfigFormProvider';
+import messages from '../messages';
 
 const appConfig = {
   id: 'legacy',
@@ -38,12 +37,12 @@ const appConfig = {
 };
 
 const contextValue = {
+  discussionTopicErrors: [false, false],
   validDiscussionTopics: [
     { name: 'General', id: 'course' },
     { name: 'Edx', id: '13f106c6-6735-4e84-b097-0456cff55960' },
   ],
   setValidDiscussionTopics: jest.fn(),
-  discussionTopicErrors: [false, false],
 };
 
 const courseId = 'course-v1:edX+TestX+Test_Course';
@@ -95,88 +94,45 @@ describe('DiscussionTopics', () => {
     await mockStore(legacyApiResponse);
     createComponent(appConfig);
 
-    expect(container.querySelectorAll('.collapsible-card')).toHaveLength(2);
-
-    expect(container.querySelector('[id="course"]')).toBeInTheDocument();
-    expect(container.querySelector('[id="13f106c6-6735-4e84-b097-0456cff55960"]')).toBeInTheDocument();
+    expect(queryAllByTestId(container, 'course')).toHaveLength(1);
+    expect(queryAllByTestId(container, '13f106c6-6735-4e84-b097-0456cff55960')).toHaveLength(1);
   });
 
-  test('displays collapse view of general discussion topic', async () => {
+  test('renders title', async () => {
     await mockStore(legacyApiResponse);
     createComponent(appConfig);
 
-    const generalTopicNode = container.querySelector('[id="course"]');
-
-    expect(generalTopicNode.querySelector('button[aria-label="Expand"]')).toBeInTheDocument();
-    expect(generalTopicNode.querySelector('button[aria-label="Collapse"]')).not.toBeInTheDocument();
-    expect(queryByText(generalTopicNode, 'General')).toBeInTheDocument();
+    expect(container.querySelector('h5')).toHaveTextContent(messages.discussionTopics.defaultMessage);
   });
 
-  test('displays collapse view of additional discussion topic', async () => {
+  test('renders label text', async () => {
     await mockStore(legacyApiResponse);
     createComponent(appConfig);
 
-    const topicNode = container.querySelector('[id="13f106c6-6735-4e84-b097-0456cff55960"]');
-
-    expect(topicNode.querySelector('button[aria-label="Expand"]')).toBeInTheDocument();
-    expect(topicNode.querySelector('button[aria-label="Collapse"]')).not.toBeInTheDocument();
-    expect(queryByText(topicNode, 'Edx')).toBeInTheDocument();
+    expect(container.querySelector('label')).toHaveTextContent(messages.discussionTopicsLabel.defaultMessage);
   });
 
-  test('displays expand view of general discussion topic', async () => {
+  test('renders helping text', async () => {
     await mockStore(legacyApiResponse);
     createComponent(appConfig);
-    const generalTopicNode = container.querySelector('[id="course"]');
 
-    userEvent.click(queryByLabelText(generalTopicNode, 'Expand'));
-
-    expect(generalTopicNode.querySelector('button[aria-label="Collapse"]')).toBeInTheDocument();
-    expect(generalTopicNode.querySelector('button[aria-label="Expand"]')).not.toBeInTheDocument();
-    expect(generalTopicNode.querySelector('button[aria-label="Delete Topic"]')).not.toBeInTheDocument();
-    expect(generalTopicNode.querySelector('input')).toBeInTheDocument();
+    expect(queryByText(container, `${messages.discussionTopicsHelp.defaultMessage}`)).toBeInTheDocument();
   });
 
-  test('displays expand view of additional discussion topic', async () => {
+  test('renders a Add topic button', async () => {
     await mockStore(legacyApiResponse);
     createComponent(appConfig);
-    const topicNode = container.querySelector('[id="13f106c6-6735-4e84-b097-0456cff55960"]');
 
-    userEvent.click(queryByLabelText(topicNode, 'Expand'));
-
-    expect(topicNode.querySelector('button[aria-label="Expand"]')).not.toBeInTheDocument();
-    expect(topicNode.querySelector('button[aria-label="Collapse"]')).toBeInTheDocument();
-    expect(topicNode.querySelector('button[aria-label="Delete Topic"]')).toBeInTheDocument();
-    expect(topicNode.querySelector('input')).toBeInTheDocument();
+    expect(queryByText(container, `${messages.addTopicButton.defaultMessage}`)).toBeInTheDocument();
   });
 
-  test('displays updated discussion topic list after delete an additional topic', async () => {
+  test('calls "onClick" when add topic button click', async () => {
     await mockStore(legacyApiResponse);
     createComponent(appConfig);
-    const topicNode = container.querySelector('[id= "13f106c6-6735-4e84-b097-0456cff55960"]');
 
-    userEvent.click(queryByLabelText(topicNode, 'Expand'));
-    userEvent.click(queryByLabelText(topicNode, 'Delete Topic'));
+    const addTopicButton = queryByText(container, `${messages.addTopicButton.defaultMessage}`);
+    fireEvent.click(addTopicButton);
 
-    expect(container.querySelectorAll('.card')).toHaveLength(1);
-
-    await act(async () => {
-      userEvent.click(container.querySelector('.btn-outline-brand'));
-    });
-
-    expect(container.querySelectorAll('.collapsible-card')).toHaveLength(1);
-  });
-
-  test('updates discussion topic name', async () => {
-    await mockStore(legacyApiResponse);
-    createComponent(appConfig);
-    const topicNode = container.querySelector('[id= "13f106c6-6735-4e84-b097-0456cff55960"]');
-
-    userEvent.click(queryByLabelText(topicNode, 'Expand'));
-    await act(async () => {
-      fireEvent.change(topicNode.querySelector('input'), { target: { value: 'new name' } });
-    });
-    userEvent.click(queryByLabelText(topicNode, 'Collapse'));
-
-    expect(queryByText(topicNode, 'new name')).toBeInTheDocument();
+    expect(queryByText(container, `${messages.configureAdditionalTopic.defaultMessage}`)).toBeInTheDocument();
   });
 });
