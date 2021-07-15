@@ -8,6 +8,7 @@ function PageGrid({ pages }) {
   return (
     <CardGrid columnSizes={{
       xs: 12,
+      sm: 6,
       lg: 4,
       xl: 4,
     }}
