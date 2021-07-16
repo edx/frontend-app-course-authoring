@@ -139,7 +139,7 @@ const messages = defineMessages({
   },
   discussionTopicDeletionHelp: {
     id: 'authoring.discussions.discussionTopicDeletion.help',
-    defaultMessage: ' edX recommends that you do not delete discussion topics once your course is running.',
+    defaultMessage: 'edX recommends that you do not delete discussion topics once your course is running.',
     description: 'Help text for delete a discussion topic from discussion topic section.',
   },
   discussionTopicDeletionLabel: {
