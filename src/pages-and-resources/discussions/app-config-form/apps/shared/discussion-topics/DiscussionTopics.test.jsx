@@ -4,6 +4,9 @@ import {
   render,
   fireEvent,
   queryAllByTestId,
+  queryByTestId,
+  queryByLabelText,
+  act,
 } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { initializeMockApp } from '@edx/frontend-platform';
@@ -11,6 +14,7 @@ import { AppProvider } from '@edx/frontend-platform/react';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
+import userEvent from '@testing-library/user-event';
 
 import DiscussionTopics from './DiscussionTopics';
 import initializeStore from '../../../../../../store';
@@ -51,7 +55,6 @@ describe('DiscussionTopics', () => {
   let axiosMock;
   let store;
   let container;
-
   beforeEach(() => {
     initializeMockApp({
       authenticatedUser: {
@@ -134,5 +137,19 @@ describe('DiscussionTopics', () => {
     fireEvent.click(addTopicButton);
 
     expect(queryByText(container, `${messages.configureAdditionalTopic.defaultMessage}`)).toBeInTheDocument();
+  });
+
+  test('updates discussion topic name', async () => {
+    await mockStore(legacyApiResponse);
+    createComponent(appConfig);
+    const topicCard = queryByTestId(container, '13f106c6-6735-4e84-b097-0456cff55960');
+
+    userEvent.click(queryByLabelText(topicCard, 'Expand'));
+    await act(async () => {
+      fireEvent.change(topicCard.querySelector('input'), { target: { value: 'new name' } });
+    });
+    userEvent.click(queryByLabelText(topicCard, 'Collapse'));
+
+    expect(queryByText(topicCard, 'new name')).toBeInTheDocument();
   });
 });
