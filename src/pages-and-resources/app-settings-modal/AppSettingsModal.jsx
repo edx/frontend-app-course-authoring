@@ -2,12 +2,13 @@ import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
-  Button, Form, Hyperlink, ModalLayer, Spinner, TransitionReplace,
-  StatefulButton, Badge,
+  Form, Hyperlink, ModalDialog, Spinner, TransitionReplace,
+  StatefulButton, Badge, ActionRow,
 } from '@edx/paragon';
 import { Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
+import { useMediaQuery } from 'react-responsive/src';
 import { RequestStatus } from '../../data/constants';
 import FormSwitchGroup from '../../generic/FormSwitchGroup';
 import { useModel } from '../../generic/model-store';
@@ -64,6 +65,8 @@ function AppSettingsModal({
   const appInfo = useModel('courseApps', appId);
   const dispatch = useDispatch();
   const submitButtonState = updateSettingsRequestStatus === RequestStatus.IN_PROGRESS ? 'pending' : 'default';
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 768px)' });
+  const modalVariant = isTabletOrMobile ? 'dark' : 'default';
 
   useEffect(() => {
     if (updateSettingsRequestStatus === RequestStatus.SUCCESSFUL) {
@@ -95,84 +98,92 @@ function AppSettingsModal({
   );
 
   return (
-    <ModalLayer
+    <ModalDialog
       isOpen
       closeText={intl.formatMessage(messages.cancel)}
       dialogClassName="modal-dialog-centered modal-lg"
+      hasCloseButton={isTabletOrMobile}
       onClose={onClose}
+      variant={modalVariant}
+      isFullscreenOnMobile
     >
-      <div
-        role="dialog"
-        aria-label={title}
-        className="bg-white d-flex flex-column mw-xs p-3"
-      >
-        {
-          loadingStatus === RequestStatus.SUCCESSFUL && (
-            <Formik
-              initialValues={{
-                enabled: !!appInfo?.enabled,
-                ...initialValues,
-              }}
-              validationSchema={
-                Yup.object()
-                  .shape({
-                    enabled: Yup.boolean(),
-                    ...validationSchema,
-                  })
-              }
-              onSubmit={handleFormSubmit}
-            >{(formikProps) => (
+      {
+        loadingStatus === RequestStatus.SUCCESSFUL && (
+          <Formik
+            initialValues={{
+              enabled: !!appInfo?.enabled,
+              ...initialValues,
+            }}
+            validationSchema={
+              Yup.object()
+                .shape({
+                  enabled: Yup.boolean(),
+                  ...validationSchema,
+                })
+            }
+            onSubmit={handleFormSubmit}
+          >
+            {(formikProps) => (
               <Form onSubmit={formikProps.handleSubmit}>
-                <h3>{title}</h3>
-                <FormSwitchGroup
-                  id={`enable-${appId}-toggle`}
-                  name="enabled"
-                  onChange={formikProps.handleChange}
-                  onBlur={formikProps.handleBlur}
-                  checked={formikProps.values.enabled}
-                  label={(
-                    <>
-                      {enableAppLabel}&nbsp;
-                      {
-                        formikProps.values.enabled && (
-                          <Badge className="py-1" variant="success">
-                            {intl.formatMessage(messages.enabled)}
-                          </Badge>
-                        )
-                      }
-                    </>
-                  )}
-                  helpText={(<p>{enableAppHelp}<br /> <span className="pt-3">{learnMoreLink}</span> </p>)}
-                />
-                <AppSettingsForm formikProps={formikProps}>
-                  {children}
-                </AppSettingsForm>
+                <ModalDialog.Header>
+                  <ModalDialog.Title>
+                    {title}
+                  </ModalDialog.Title>
+                </ModalDialog.Header>
+                <ModalDialog.Body>
+                  <FormSwitchGroup
+                    id={`enable-${appId}-toggle`}
+                    name="enabled"
+                    onChange={formikProps.handleChange}
+                    onBlur={formikProps.handleBlur}
+                    checked={formikProps.values.enabled}
+                    label={(
+                      <>
+                        {enableAppLabel}&nbsp;
+                        {
+                          formikProps.values.enabled && (
+                            <Badge className="py-1" variant="success">
+                              {intl.formatMessage(messages.enabled)}
+                            </Badge>
+                          )
+                        }
+                      </>
+                    )}
+                    helpText={(<p>{enableAppHelp}<br /> <span className="pt-3">{learnMoreLink}</span></p>)}
+                  />
+                  <AppSettingsForm formikProps={formikProps}>
+                    {children}
+                  </AppSettingsForm>
+                </ModalDialog.Body>
+
                 {formikProps.values.enabled && children
                   && <AppConfigFormDivider marginAdj={{ default: 3, sm: null }} />}
-                <div className="d-flex justify-content-end">
-                  <Button variant="link" onClick={onClose}>
-                    {intl.formatMessage(messages.cancel)}
-                  </Button>
-                  <StatefulButton
-                    labels={{
-                      default: intl.formatMessage(messages.apply),
-                      pending: intl.formatMessage(messages.applying),
-                      complete: intl.formatMessage(messages.applied),
-                    }}
-                    state={submitButtonState}
-                    onClick={formikProps.handleSubmit}
-                  />
-                </div>
+
+                <ModalDialog.Footer style={{ position: 'absolute', width: '100%' }}>
+                  <ActionRow>
+                    <ModalDialog.CloseButton variant="tertiary">
+                      {intl.formatMessage(messages.cancel)}
+                    </ModalDialog.CloseButton>
+                    <StatefulButton
+                      labels={{
+                        default: intl.formatMessage(messages.apply),
+                        pending: intl.formatMessage(messages.applying),
+                        complete: intl.formatMessage(messages.applied),
+                      }}
+                      state={submitButtonState}
+                      onClick={formikProps.handleSubmit}
+                    />
+                  </ActionRow>
+                </ModalDialog.Footer>
               </Form>
             )}
-            </Formik>
-          )
-        }
-        {loadingStatus === RequestStatus.IN_PROGRESS && (
-          <Spinner animation="border" variant="primary" className="align-self-center" />
-        )}
-      </div>
-    </ModalLayer>
+          </Formik>
+        )
+      }
+      {loadingStatus === RequestStatus.IN_PROGRESS && (
+        <Spinner animation="border" variant="primary" className="align-self-center" />
+      )}
+    </ModalDialog>
   );
 }
 
