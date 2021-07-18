@@ -49,6 +49,7 @@
     "core-js": "3.8.1",
     "email-validator": "2.0.4",
     "formik": "2.2.6",
+    "lodash": "4.17.19",
     "moment": "2.27.0",
     "prop-types": "15.7.2",
     "react": "16.14.0",

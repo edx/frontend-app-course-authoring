@@ -7,10 +7,10 @@ import {
 } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { history } from '@edx/frontend-platform';
-
+import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
-  Button, FullscreenModal, Stepper,
+  Alert, Button, FullscreenModal, Stepper,
 } from '@edx/paragon';
 
 import { PagesAndResourcesContext } from '../PagesAndResourcesProvider';
@@ -22,6 +22,7 @@ import AppList from './app-list';
 import AppConfigForm from './app-config-form';
 import { DENIED, FAILED } from './data/slice';
 import ConnectionErrorAlert from '../../generic/ConnectionErrorAlert';
+import { useModel } from '../../generic/model-store';
 import PermissionDeniedAlert from '../../generic/PermissionDeniedAlert';
 
 const SELECTION_STEP = 'selection';
@@ -31,6 +32,13 @@ function DiscussionsSettings({ courseId, intl }) {
   const dispatch = useDispatch();
   const { path: pagesAndResourcesPath } = useContext(PagesAndResourcesContext);
   const { status, hasValidationError } = useSelector(state => state.discussions);
+  const courseDetail = useModel('courseDetails', courseId);
+
+  let canChangeProviders = false;
+  if (courseDetail) {
+    const courseStarted = new Date(courseDetail.start) <= new Date();
+    canChangeProviders = getAuthenticatedUser().administrator || !courseStarted;
+  }
 
   useEffect(() => {
     dispatch(fetchApps(courseId));
@@ -114,7 +122,14 @@ function DiscussionsSettings({ courseId, intl }) {
               eventKey={SELECTION_STEP}
               title={intl.formatMessage(messages.providerSelection)}
             >
-              <AppList />
+              {courseDetail
+                && !canChangeProviders
+                && (
+                  <Alert variant="warning">
+                    {intl.formatMessage(messages.noProviderSwitchAfterCourseStarted)}
+                  </Alert>
+                )}
+              <AppList disabled={!canChangeProviders} />
             </Stepper.Step>
             <Stepper.Step
               eventKey={SETTINGS_STEP}

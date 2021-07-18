@@ -10,18 +10,24 @@ import messages from './messages';
 import FeaturesList from './FeaturesList';
 
 function AppCard({
-  app, onClick, intl, selected, features,
+  app, disabled, onClick, intl, selected, features,
 }) {
   const supportText = app.hasFullSupport
     ? intl.formatMessage(messages.appFullSupport)
     : intl.formatMessage(messages.appPartialSupport);
 
+  const handleCardSelect = () => {
+    if (!disabled) {
+      onClick(app.id);
+    }
+  };
+
   return (
     <Card
       key={app.id}
       tabIndex="-1"
-      onClick={() => onClick(app.id)}
-      onKeyPress={() => onClick(app.id)}
+      onClick={handleCardSelect}
+      onKeyPress={handleCardSelect}
       role="radio"
       aria-checked={selected}
       style={{
@@ -40,6 +46,7 @@ function AppCard({
       >
         <CheckboxControl
           checked={selected}
+          disabled={disabled}
           readOnly
           aria-label={intl.formatMessage(messages.selectApp, {
             appName: intl.formatMessage(messages[`appName-${app.id}`]),
@@ -69,10 +76,15 @@ AppCard.propTypes = {
     featureIds: PropTypes.arrayOf(PropTypes.string).isRequired,
     hasFullSupport: PropTypes.bool.isRequired,
   }).isRequired,
+  disabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   selected: PropTypes.bool.isRequired,
   intl: intlShape.isRequired,
   features: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+AppCard.defaultProps = {
+  disabled: false,
 };
 
 export default injectIntl(AppCard);

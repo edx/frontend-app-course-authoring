@@ -34,6 +34,11 @@ const messages = defineMessages({
     defaultMessage: 'Applied',
     description: 'Button label when the discussion configuration has been successfully submitted.',
   },
+  noProviderSwitchAfterCourseStarted: {
+    id: 'authoring.discussions.noProviderSwitchAfterCourseStarted',
+    defaultMessage: "Discussion provider can't be changed after course has started, please reach out to partner support.",
+    description: "Informs the user that the provider can't be changed after the course has started.",
+  },
   providerSelection: {
     id: 'authoring.discussions.providerSelection',
     defaultMessage: 'Provider selection',

@@ -12,32 +12,39 @@ import {
   DENIED,
 } from './slice';
 
+function updateAppState({
+  apps,
+  features,
+  activeAppId,
+  appConfig,
+  discussionTopicIds,
+  discussionTopics,
+  divideDiscussionIds,
+  userPermissions,
+}) {
+  return async (dispatch) => {
+    dispatch(addModels({ modelType: 'apps', models: apps }));
+    dispatch(addModels({ modelType: 'features', models: features }));
+    dispatch(addModel({ modelType: 'appConfigs', model: appConfig }));
+    dispatch(addModels({ modelType: 'discussionTopics', models: discussionTopics }));
+
+    dispatch(loadApps({
+      activeAppId,
+      appIds: apps.map(app => app.id),
+      featureIds: features.map(feature => feature.id),
+      discussionTopicIds,
+      divideDiscussionIds,
+      userPermissions,
+    }));
+  };
+}
+
 export function fetchApps(courseId) {
   return async (dispatch) => {
     dispatch(updateStatus({ status: LOADING }));
     try {
-      const {
-        apps,
-        features,
-        activeAppId,
-        appConfig,
-        discussionTopicIds,
-        discussionTopics,
-        divideDiscussionIds,
-      } = await getApps(courseId);
-
-      dispatch(addModel({ modelType: 'appConfigs', model: appConfig }));
-      dispatch(addModels({ modelType: 'apps', models: apps }));
-      dispatch(addModels({ modelType: 'features', models: features }));
-      dispatch(addModels({ modelType: 'discussionTopics', models: discussionTopics }));
-
-      dispatch(loadApps({
-        activeAppId,
-        appIds: apps.map(app => app.id),
-        featureIds: features.map(feature => feature.id),
-        discussionTopicIds,
-        divideDiscussionIds,
-      }));
+      const apps = await getApps(courseId);
+      dispatch(updateAppState(apps));
     } catch (error) {
       if (error.response && error.response.status === 403) {
         dispatch(updateStatus({ status: DENIED }));
@@ -53,28 +60,9 @@ export function saveAppConfig(courseId, appId, drafts, successPath) {
     dispatch(updateSaveStatus({ status: SAVING }));
 
     try {
-      const {
-        apps,
-        features,
-        activeAppId,
-        appConfig,
-        discussionTopicIds,
-        discussionTopics,
-        divideDiscussionIds,
-      } = await postAppConfig(courseId, appId, drafts);
+      const apps = await postAppConfig(courseId, appId, drafts);
+      dispatch(updateAppState(apps));
 
-      dispatch(addModel({ modelType: 'appConfigs', model: appConfig }));
-      dispatch(addModels({ modelType: 'apps', models: apps }));
-      dispatch(addModels({ modelType: 'features', models: features }));
-      dispatch(addModels({ modelType: 'discussionTopics', models: discussionTopics }));
-
-      dispatch(loadApps({
-        activeAppId,
-        appIds: apps.map(app => app.id),
-        featureIds: features.map(feature => feature.id),
-        discussionTopicIds,
-        divideDiscussionIds,
-      }));
       dispatch(updateSaveStatus({ status: SAVED }));
       // Note that we redirect here to avoid having to work with the promise over in AppConfigForm.
       history.push(successPath);
