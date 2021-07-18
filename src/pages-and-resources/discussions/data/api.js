@@ -46,6 +46,7 @@ function normalizePluginConfig(data) {
 function normalizeApps(data) {
   const apps = Object.entries(data.providers.available).map(([key, app]) => ({
     id: key,
+    messages: app.messages || {},
     featureIds: app.features,
     // TODO: Fix this and get it from the backend!
     externalLinks: {

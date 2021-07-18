@@ -56,6 +56,9 @@ function LtiConfigForm({
       <Form ref={formRef} onSubmit={handleSubmit}>
         <h3 className="mb-3">{title}</h3>
         <p>{intl.formatMessage(messages.formInstructions)}</p>
+        {app.messages && Object.values(app.messages).flat().map(msg => (
+          <p key={msg}>{msg}</p>
+        ))}
         <Form.Group controlId="consumerKey" isInvalid={isInvalidConsumerKey} className="mb-4">
           <Form.Control
             floatingLabel={intl.formatMessage(messages.consumerKey)}
@@ -111,6 +114,9 @@ LtiConfigForm.propTypes = {
       accessibility: PropTypes.string,
       contactEmail: PropTypes.string,
     }).isRequired,
+    messages: PropTypes.shape({
+      setup: PropTypes.arrayOf(PropTypes.string),
+    }),
   }).isRequired,
   appConfig: PropTypes.shape({
     consumerKey: PropTypes.string,
