@@ -109,7 +109,7 @@ LtiConfigForm.propTypes = {
       contactEmail: PropTypes.string,
     }).isRequired,
     messages: PropTypes.shape({
-      setup: PropTypes.arrayOf(PropTypes.string)
+      setup: PropTypes.arrayOf(PropTypes.string),
     }),
   }).isRequired,
   appConfig: PropTypes.shape({
