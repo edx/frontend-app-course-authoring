@@ -108,6 +108,9 @@ LtiConfigForm.propTypes = {
       accessibility: PropTypes.string,
       contactEmail: PropTypes.string,
     }).isRequired,
+    messages: PropTypes.shape({
+      setup: PropTypes.arrayOf(PropTypes.string)
+    }),
   }).isRequired,
   appConfig: PropTypes.shape({
     consumerKey: PropTypes.string.isRequired,
