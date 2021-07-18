@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, {
   useCallback, useContext, useEffect, useState,
 } from 'react';
@@ -59,8 +60,7 @@ function AppConfigForm({
 
   // This is a callback that gets called after the form has been submitted successfully.
   const handleSubmit = useCallback((values) => {
-    // FIXME: this should check whether form values have changed as well!
-    const needsConfirmation = (activeAppId !== selectedAppId);
+    const needsConfirmation = (activeAppId !== selectedAppId || !_.isEqual(values, appConfig));
     if (needsConfirmation && !confirmationDialogVisible) {
       setConfirmationDialogVisible(true);
     } else {
