@@ -8,6 +8,7 @@ import {
   fetchCourseAppsSuccess,
   updateLoadingStatus,
   updateSavingStatus,
+  updateCourseAppsApiStatus,
 } from './slice';
 
 /* eslint-disable import/prefer-default-export */
@@ -24,9 +25,10 @@ export function fetchCourseApps(courseId) {
       }));
       dispatch(updateLoadingStatus({ courseId, status: RequestStatus.SUCCESSFUL }));
     } catch (error) {
-      // TODO: We need generic error handling in the app for when a request just fails... in other
-      // parts of the app (proctored exam settings) we show a nice message and ask the user to
-      // reload/try again later.
+      if (error.response && error.response.status === 403) {
+        dispatch(updateCourseAppsApiStatus({ status: RequestStatus.DENIED }));
+      }
+
       dispatch(updateLoadingStatus({ courseId, status: RequestStatus.FAILED }));
     }
   };

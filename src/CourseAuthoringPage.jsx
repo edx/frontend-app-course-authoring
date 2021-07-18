@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Footer from '@edx/frontend-component-footer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Header from './studio-header/Header';
 import { fetchCourseDetail } from './data/thunks';
 import { useModel } from './generic/model-store';
+import PermissionDeniedAlert from './generic/PermissionDeniedAlert';
+import { getCourseAppsApiStatus, getLoadingStatus } from './pages-and-resources/data/selectors';
+import { RequestStatus } from './data/constants';
+import Loading from './generic/Loading';
 
 export default function CourseAuthoringPage({ courseId, children }) {
   const dispatch = useDispatch();
@@ -19,17 +23,28 @@ export default function CourseAuthoringPage({ courseId, children }) {
   const courseNumber = courseDetail ? courseDetail.number : null;
   const courseOrg = courseDetail ? courseDetail.org : null;
   const courseTitle = courseDetail ? courseDetail.name : courseId;
+  const courseAppsApiStatus = useSelector(getCourseAppsApiStatus);
+  const inProgress = useSelector(getLoadingStatus) === RequestStatus.IN_PROGRESS;
+  if (courseAppsApiStatus === RequestStatus.DENIED) {
+    return (
+      <PermissionDeniedAlert />
+    );
+  }
+
+  const AppHeader = () => (
+    <Header
+      courseNumber={courseNumber}
+      courseOrg={courseOrg}
+      courseTitle={courseTitle}
+      courseId={courseId}
+    />
+  );
 
   return (
     <>
-      <Header
-        courseNumber={courseNumber}
-        courseOrg={courseOrg}
-        courseTitle={courseTitle}
-        courseId={courseId}
-      />
+      {inProgress ? <Loading /> : AppHeader()}
       {children}
-      <Footer />
+      {!inProgress && <Footer />}
     </>
   );
 }

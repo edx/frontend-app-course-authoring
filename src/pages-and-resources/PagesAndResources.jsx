@@ -14,7 +14,9 @@ import ResourceList from './resources/ResourcesList';
 
 import { fetchCourseApps } from './data/thunks';
 import { useModels } from '../generic/model-store';
+import { getLoadingStatus } from './data/selectors';
 import PagesAndResourcesProvider from './PagesAndResourcesProvider';
+import { RequestStatus } from '../data/constants';
 
 function PagesAndResources({ courseId, intl }) {
   const { path, url } = useRouteMatch();
@@ -25,9 +27,12 @@ function PagesAndResources({ courseId, intl }) {
   }, [courseId]);
 
   const courseAppIds = useSelector(state => state.pagesAndResources.courseAppIds);
+  const loadingStatus = useSelector(getLoadingStatus);
   // Each page here is driven by a course app
   const pages = useModels('courseApps', courseAppIds);
-
+  if (loadingStatus === RequestStatus.IN_PROGRESS) {
+    return <></>;
+  }
   return (
     <PagesAndResourcesProvider courseId={courseId}>
       <main className="container container-mw-md">
